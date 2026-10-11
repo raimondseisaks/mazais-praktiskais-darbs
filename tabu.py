@@ -72,7 +72,7 @@ def reduce_fleet(inst, routes):
 
 def route_arcs(route):
     seq = [0] + route + [0]
-    return {(a, b) if a < b else (b, a) for a, b in zip(seq, seq[1:])}
+    return {(a, b) if a < b else (b, a) for a, b in zip(seq, seq[1:]) if a != b}
 
 
 class TabuSearch:
@@ -125,6 +125,8 @@ class TabuSearch:
         if ri == rj:
             r = [c for c in self.routes[ri] if c != i]
             r.insert(r.index(j) + (1 if after else 0), i)
+            if r == self.routes[ri]:
+                return None
             return [(ri, r)]
         a = [c for c in self.routes[ri] if c != i]
         b = list(self.routes[rj])
@@ -198,18 +200,20 @@ class TabuSearch:
                 candidates.append(self._swap(i, j))
                 if self.rid[i] == self.rid[j]:
                     for first in (True, False):
-                        change = self._reverse(i, j, first)
-                        if change is not None:
-                            candidates.append(change)
+                        candidates.append(self._reverse(i, j, first))
                 else:
                     candidates.append(self._two_opt_star(i, j, True))
                     candidates.append(self._two_opt_star(i, j, False))
             for change in candidates:
+                if change is None:
+                    continue
                 d_dist, d_exc = self._evaluate(change)
                 f = d_dist + self.alpha * d_exc
                 if f >= best_f:
                     continue
                 removed, added = self._changed_arcs(change)
+                if not removed and not added:
+                    continue
                 is_tabu = any(self.tabu.get(a, 0) > it for a in added)
                 aspirated = cur_exc + d_exc == 0 and cur_dist + d_dist < best_dist - 1e-7
                 if is_tabu and not aspirated:
