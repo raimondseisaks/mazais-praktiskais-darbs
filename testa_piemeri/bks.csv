@@ -1,0 +1,9 @@
+name,bks,source
+E-n13-k4,247,optimal (E-n13-k4.sol)
+P-n16-k8,450,optimal (P-n16-k8.sol)
+E-n22-k4,375,optimal (instance comment)
+A-n32-k5,784,optimal (A-n32-k5.sol)
+F-n72-k4,237,optimal (F-n72-k4.sol)
+M-n101-k10,820,optimal (M-n101-k10.sol)
+X-n101-k25,27591,BKS (X-n101-k25.sol)
+CMT1,524.61,optimal (instance comment; unrounded Euclidean distances)
