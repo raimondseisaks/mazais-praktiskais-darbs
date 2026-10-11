@@ -2,8 +2,8 @@
 
 Palaišana (Python 3.9+, bez ārējām bibliotēkām):
 
-    python3 run_experiments.py                # visi testa piemēri
-    python3 run_experiments.py CMT1 A-n32-k5  # tikai izvēlētie (skat testa piemēri)
+    python3 main.py                # visi testa piemēri
+    python3 main.py CMT1 A-n32-k5  # tikai izvēlētie (skat testa piemēri)
 
 ## Faili
 
